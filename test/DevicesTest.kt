@@ -1,7 +1,3 @@
-package oo_test
-
-import Light
-import Door
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
