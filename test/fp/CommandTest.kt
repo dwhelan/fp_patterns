@@ -1,4 +1,4 @@
-package fp_test
+package oo_test
 
 import Door
 import Light
@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
-internal class `FP light commands` {
+internal class `OO light commands` {
     private val light = Light()
 
     @Test fun turn_light_on() {
@@ -27,7 +27,7 @@ internal class `FP light commands` {
     }
 }
 
-internal class `FP door commands` {
+internal class `OO door commands` {
     private val door = Door()
 
     @Test fun open_door() {
@@ -47,7 +47,7 @@ internal class `FP door commands` {
     }
 }
 
-internal class `FP command list` {
+internal class `OO command list` {
     private val door = Door()
     private val light = Light()
 
