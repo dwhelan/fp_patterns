@@ -1,61 +1,48 @@
-package fp_test
+package oo
 
 import Door
 import Light
-import oo.*
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
-internal class `FP light commands` {
+internal class `OO light commands` {
     private val light = Light()
 
     @Test fun turn_light_on() {
-        val command = TurnLightOn(light)
-        command.execute()
-
+        TurnOn(light).execute()
         assertTrue(light.isOn())
-        assertFalse(light.isOff())
     }
 
     @Test fun turn_light_off() {
-        val command = TurnLightOff(light)
-        command.execute()
-
-        assertTrue(light.isOff())
+        TurnOff(light).execute()
         assertFalse(light.isOn())
     }
 }
 
-internal class `FP door commands` {
+internal class `OO door commands` {
     private val door = Door()
 
     @Test fun open_door() {
-        val command = OpenDoor(door)
-        command.execute()
-
+        Open(door).execute()
         assertTrue(door.isOpen())
-        assertFalse(door.isClosed())
     }
 
     @Test fun close_door() {
-        val command = CloseDoor(door)
-        command.execute()
-
-        assertTrue(door.isClosed())
+        Close(door).execute()
         assertFalse(door.isOpen())
     }
 }
 
-internal class `FP command list` {
+internal class `OO command list` {
     private val door = Door()
     private val light = Light()
 
     @Test fun execute() {
-        val command = CommandList(listOf(OpenDoor(door), TurnLightOn(light)))
-        command.execute()
+        Sequencer(listOf(Open(door), TurnOn(light))).execute()
 
         assertTrue(door.isOpen())
         assertTrue(light.isOn())
     }
 }
+
