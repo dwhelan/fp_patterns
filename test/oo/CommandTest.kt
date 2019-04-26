@@ -59,4 +59,3 @@ internal class `FP command list` {
         assertTrue(light.isOn())
     }
 }
-
