@@ -5,7 +5,7 @@ import Light
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
-internal class `OO light commands` {
+class `OO light commands` {
     val light = Light()
 
     @Test fun turn_on() {
@@ -19,7 +19,7 @@ internal class `OO light commands` {
     }
 }
 
-internal class `OO door commands` {
+class `OO door commands` {
     val door = Door()
 
     @Test fun open() {
@@ -34,12 +34,11 @@ internal class `OO door commands` {
 
     @Test fun greet() {
         Greet(door, "hello").execute()
-        assertEquals("hello", door.message)
+        assertEquals("hello", door.greeting)
     }
 }
 
-
-internal class `OO command list` {
+class `OO command list` {
     val door = Door()
     val light = Light()
 
@@ -48,7 +47,7 @@ internal class `OO command list` {
 
         assertTrue(door.isOpen())
         assertTrue(light.isOn())
-        assertEquals("hello", door.message)
+        assertEquals("hello", door.greeting)
     }
 }
 

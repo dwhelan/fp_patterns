@@ -37,7 +37,7 @@ class `FP door commands` {
 
     @Test fun greet() {
         greet(door, "hello")()
-        assertEquals("hello", door.message)
+        assertEquals("hello", door.greeting)
     }
 }
 

@@ -18,19 +18,18 @@ class LightTest {
 class DoorTest {
     var door : Door = Door()
 
-    @Test internal fun open_door() {
+    @Test fun open_door() {
         door.open()
         assertTrue(door.isOpen())
     }
 
-    @Test internal fun close_door() {
+    @Test fun close_door() {
         door.close()
         assertFalse(door.isOpen())
     }
 
-    @Test internal fun greet() {
+    @Test fun greet() {
         door.greet("hello")
-        assertEquals("hello", door.message)
+        assertEquals("hello", door.greeting)
     }
 }
-
