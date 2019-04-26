@@ -27,5 +27,10 @@ class DoorTest {
         door.close()
         assertFalse(door.isOpen())
     }
+
+    @Test internal fun greet() {
+        door.greet("hello")
+        assertEquals("hello", door.message)
+    }
 }
 

@@ -6,16 +6,17 @@ import Light
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
 
 class `FP light commands` {
     val light = Light()
 
-    @Test fun turn_light_on() {
+    @Test fun turn_on() {
         turnOn(light)()
         assertTrue(light.isOn())
     }
 
-    @Test fun turn_light_off() {
+    @Test fun turn_off() {
         turnOff(light)()
         assertFalse(light.isOn())
     }
@@ -29,9 +30,14 @@ class `FP door commands` {
         assertTrue(door.isOpen())
     }
 
-    @Test fun close_door() {
+    @Test fun close() {
         close(door)()
         assertFalse(door.isOpen())
+    }
+
+    @Test fun greet() {
+        greet(door, "hello")()
+        assertEquals("hello", door.message)
     }
 }
 
@@ -40,7 +46,7 @@ class `FP command list` {
     val light = Light()
 
     @Test fun execute() {
-        sequencer(listOf(open(door), turnOn(light)))()
+        sequencer(listOf(open(door), turnOn(light), greet(door, "hello")))()
 
         assertTrue(door.isOpen())
         assertTrue(light.isOn())
