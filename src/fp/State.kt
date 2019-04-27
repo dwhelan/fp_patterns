@@ -2,31 +2,37 @@ package fp
 
 enum class StateName { LOWER, UPPER }
 
-data class State(val name: StateName, val count: Int) {}
+data class State(internal val name: StateName, internal val count: Int) {}
 
 class Processor {
     fun echo(string: String) : Pair<String, State> {
-        println(string)
-        return Pair(string.toLowerCase(), State(StateName.UPPER, 0))
+        return echo(Pair(string, State(StateName.LOWER, 0)))
     }
 
     fun echo(result: Pair<String, State>) : Pair<String, State> {
-        println("" + result)
-        val state = result.second
+        val state = result.state
         if (state.name == StateName.LOWER) {
-            return Pair(result.first.toLowerCase(), State(StateName.UPPER, 0))
-
+            return lower_case(result.string)
         } else {
-            if (state.count >= 1) {
-                return Pair(result.first.toUpperCase(), State(StateName.LOWER, 0))
-            } else {
-                return Pair(result.first.toUpperCase(), State(StateName.UPPER, state.count + 1))
-            }
+            return upper_case(result.string, state.count)
+        }
+    }
+
+    private fun lower_case(string: String) : Pair<String, State> {
+        return Pair(string.toLowerCase(), State(StateName.UPPER, 0))
+    }
+
+    private fun upper_case(string: String, count: Int) : Pair<String, State> {
+        if (count >= 1) {
+            return Pair(string.toUpperCase(), State(StateName.LOWER, 0))
+        } else {
+            return Pair(string.toUpperCase(), State(StateName.UPPER, count + 1))
         }
     }
 }
 
-
+val Pair<String, State>.string get() = this.first
+val Pair<String, State>.state get() = this.second
 
 
 
