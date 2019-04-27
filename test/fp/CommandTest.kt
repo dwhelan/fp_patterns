@@ -8,17 +8,12 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 
-class `FP light commands` {
+class CommandTest {
     val light = Light()
 
     @Test fun turn_on() {
         turnOn(light)()
         assertTrue(light.on)
-    }
-
-    @Test fun turn_off() {
-        turnOff(light)()
-        assertFalse(light.on)
     }
 }
 
@@ -28,11 +23,6 @@ class `FP door commands` {
     @Test fun open() {
         open(door)()
         assertTrue(door.open)
-    }
-
-    @Test fun close() {
-        close(door)()
-        assertFalse(door.open)
     }
 
     @Test fun greet() {

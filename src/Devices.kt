@@ -6,7 +6,6 @@
          private set
 
      fun open() { open = true }
-     fun close() { open = false }
      fun greet(message: String) { this.message = message }
  }
 
@@ -15,5 +14,4 @@
          private set
 
      fun on() { on = true }
-     fun off() { on = false }
  }

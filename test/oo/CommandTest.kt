@@ -5,17 +5,12 @@ import Light
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
-class `OO light commands` {
+class CommandTest {
     val light = Light()
 
     @Test fun turn_on() {
         TurnOn(light).execute()
         assertTrue(light.on)
-    }
-
-    @Test fun turn_off() {
-        TurnOff(light).execute()
-        assertFalse(light.on)
     }
 }
 
@@ -25,11 +20,6 @@ class `OO door commands` {
     @Test fun open() {
         Open(door).execute()
         assertTrue(door.open)
-    }
-
-    @Test fun close() {
-        Close(door).execute()
-        assertFalse(door.open)
     }
 
     @Test fun greet() {
