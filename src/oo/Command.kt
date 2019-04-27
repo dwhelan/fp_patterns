@@ -8,7 +8,7 @@ interface Command {
 }
 
 class TurnOn(val light: Light) : Command {
-    override fun execute() { light.on()}
+    override fun execute() { light.on() }
 }
 
 class TurnOff(val light: Light) : Command {
@@ -28,7 +28,5 @@ class Greet(val door: Door, val message: String) : Command {
 }
 
 class Sequencer(val commands: List<Command>) : Command {
-    override fun execute() {
-        commands.forEach { command -> command.execute() }
-    }
+    override fun execute() { commands.forEach { command -> command.execute() } }
 }

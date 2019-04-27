@@ -4,15 +4,15 @@ import Light
 import Door
 
 typealias Command = (
-    () -> Any
+    () -> Unit
 )
 
 val turnOn: (Light) -> Command = {
-    light ->  { light.on() }
+    light -> { light.on() }
 }
 
 val turnOff: (Light) -> Command = {
-    light ->  { light.off() }
+    light -> { light.off() }
 }
 
 val open: (Door) -> Command = {
