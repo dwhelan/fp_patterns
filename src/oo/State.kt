@@ -1,10 +1,10 @@
 package oo
 
 interface State {
-    fun echo(string: String, context: StateContext): String
+    fun echo(string: String, context: Context): String
 }
 
-class StateContext {
+class Context {
     private var state: State = LowerCaseState()
 
     fun setState(newState: State) { state = newState }
@@ -13,7 +13,7 @@ class StateContext {
 }
 
 class LowerCaseState : State {
-    override fun echo(string: String, context: StateContext): String {
+    override fun echo(string: String, context: Context): String {
         context.setState(UpperCaseState())
         return string.toLowerCase()
     }
@@ -22,7 +22,7 @@ class LowerCaseState : State {
 class UpperCaseState : State {
     private var count = 0
 
-    override fun echo(string: String, context: StateContext): String {
+    override fun echo(string: String, context: Context): String {
         if (haveBeenHereTwice()) { context.setState(LowerCaseState()) }
         return string.toUpperCase()
     }

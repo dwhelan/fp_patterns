@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 class StateTest {
-    private val context = StateContext()
+    private val context = Context()
 
     @Test fun starts_in_lower_case() {
         assertEquals("x", context.echo("X"))
