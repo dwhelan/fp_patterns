@@ -4,22 +4,31 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 class StateTest {
-//    private val context = Context()
-//
-//    @Test fun starts_in_lower_case() {
-//        assertEquals("x", echo("X").first)
-//    }
-//
-//    @Test fun after_lower_case_switches_to_upper_case() {
-//        val r1 = echo("")
-//        assertEquals("X", echo("x", r1.second))
-//    }
-//
-//
-//    @Test fun after_two_upper_cases_switches_to_lower_case() {
-//        context.echo("in lower")
-//        context.echo("in upper")
-//        context.echo("in upper")
-//        assertEquals("x", context.echo("X"))
-//    }
+    private val processor = Processor()
+
+    @Test fun `starts in lower case state`() {
+        val result = processor.echo("A")
+        assertEquals("a", result.first)
+    }
+
+    @Test fun `after one call is in upper case state`() {
+        val result1 : Pair<String, State> = processor.echo("")
+        val result : Pair<String, State> = processor.echo(Pair("a", result1.second))
+        assertEquals("A", result.first)
+    }
+
+    @Test fun `after two calls is still in upper case state`() {
+        val result1 : Pair<String, State> = processor.echo("")
+        val result2 : Pair<String, State> = processor.echo(Pair("", result1.second))
+        val result : Pair<String, State> = processor.echo(Pair("a", result2.second))
+        assertEquals("A", result.first)
+    }
+
+    @Test fun `after three calls is back in lower case state`() {
+        val result1 : Pair<String, State> = processor.echo("1")
+        val result2 : Pair<String, State> = processor.echo(Pair("2", result1.second))
+        val result3 : Pair<String, State> = processor.echo(Pair("3", result2.second))
+        val result : Pair<String, State> = processor.echo(Pair("A", result3.second))
+        assertEquals("a", result.first)
+    }
 }

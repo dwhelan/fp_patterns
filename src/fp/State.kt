@@ -1,5 +1,52 @@
 package fp
 
+enum class StateName { LOWER, UPPER }
+
+data class State(val name: StateName, val count: Int) {}
+
+class Processor {
+    fun echo(string: String) : Pair<String, State> {
+        println(string)
+        return Pair(string.toLowerCase(), State(StateName.UPPER, 0))
+    }
+
+    fun echo(result: Pair<String, State>) : Pair<String, State> {
+        println("" + result)
+        val state = result.second
+        if (state.name == StateName.LOWER) {
+            return Pair(result.first.toLowerCase(), State(StateName.UPPER, 0))
+
+        } else {
+            if (state.count >= 1) {
+                return Pair(result.first.toUpperCase(), State(StateName.LOWER, 0))
+            } else {
+                return Pair(result.first.toUpperCase(), State(StateName.UPPER, state.count + 1))
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //typealias State = (String) -> Pair<String, (String) -> String>
 //typealias Result = Pair<String, State>
 //
