@@ -1,5 +1,12 @@
 package fp
 
+//typealias State = (String) -> Pair<String, (String) -> String>
+//typealias Result = Pair<String, State>
+//
+//val upperCaseState:
+//val lowerCase: (String) -> Result = {
+//    string -> Pair(string.toLowerCase(), )
+//}
 //typealias StateName = Any
 //typealias Processor = Pair<String, Any>
 //typealias Foo = (Processor) -> Processor
@@ -15,32 +22,47 @@ package fp
 //    string  ->  lowerCase(Pair(string, lowerCase))
 //}
 
-enum class StateName { LOWER, UPPER }
-
-typealias State = Pair<StateName, Int>
-typealias Result = Pair<String, State>
-typealias Processor = (Result) -> Result
-
-val lowerCase: Processor = {
-    result -> Pair(string(result).toLowerCase(), Pair(StateName.UPPER, 0))
-}
-
-val string: (Result) -> String = { it.first }
-val state: (Result) -> State = { it.second }
-val count: (Result) -> Int = { state(it).second }
-
-val upperCase: Processor = {
-    result ->
-        val string = string(result).toUpperCase()
-        val count = count(result)
-
-        if (count > 1)
-            Pair(string, Pair(StateName.LOWER, 0))
-        else
-            Pair(string, Pair(StateName.UPPER, count + 1))
-}
-
-val map : Map<StateName, Processor> = mapOf(StateName.LOWER to lowerCase, StateName.UPPER to upperCase)
+//enum class StateName { LOWER, UPPER }
+//
+//typealias State = Pair<StateName, Int>
+//typealias Result = Pair<String, State>
+//typealias Processor = (Result) -> Result
+//
+//val lowerCase: (Result) -> Result = {
+//    result -> Pair(string(result).toLowerCase(), Pair(StateName.UPPER, 0))
+//}
+//
+//val upperCase: Processor = {
+//    result ->
+//        val string = string(result).toUpperCase()
+//        val count = count(result)
+//
+//        if (count > 1)
+//            Pair(string, Pair(StateName.LOWER, 0))
+//        else
+//            Pair(string, Pair(StateName.UPPER, count + 1))
+//}
+//
+//val map : Map<StateName, Processor> = mapOf(StateName.LOWER to lowerCase, StateName.UPPER to upperCase)
+//
+//val echo: (String) -> Result = {
+//    string -> lcase(Pair(string, initialState))
+//}
+//val echo2: (Result) -> Result = {
+//    string -> lcase(Pair(string, Pair(StateName.UPPER, 0)))
+//}
+//
+//
+//val lcase: (Result) -> Result = {
+//    result -> Pair(string(result).toLowerCase(), Pair(StateName.UPPER, 0))
+//}
+//
+//val initialState: State = Pair(StateName.UPPER, 0)
+//val string: (Result) -> String = { it.first }
+//val state: (Result) -> State = { it.second }
+//val count: (Result) -> Int = { state(it).second }
+//
+//
 //val stateMap: Map<StateName, (Pair<String, StateName>)> = mapOf( StateName.LOWER to lowerCase)
 //interface Function<T> : (Pair<String, T>) -> Pair<String, T>
 
