@@ -24,7 +24,7 @@ val close: (Door) -> Command = {
 }
 
 val greet: (Door, String) -> Command = {
-    door, message -> { door.greet(message)}
+    door, message -> { door.greet(message) }
 }
 
 val sequencer: (List<Command>) -> Command = {
