@@ -1,21 +1,12 @@
 package oo;
 
 interface State {
-    void writeName(StateContext context, String name);
+    String writeName(StateContext context, String name);
 }
 
 class StateContext {
-    private State state;
+    private State state = new LowerCaseState();
 
-    public StateContext() {
-        state = new LowerCaseState();
-    }
-
-    /**
-     * Set the current state.
-     * Normally only called by classes implementing the State interface.
-     * @param newState the new state of this context
-     */
     void setState(State newState) {
         state = newState;
     }
@@ -26,37 +17,20 @@ class StateContext {
 }
 
 class LowerCaseState implements State {
-    @Override
-    public void writeName(StateContext context, String name) {
-        System.out.println(name.toLowerCase());
+    @Override public String writeName(StateContext context, String name) {
         context.setState(new MultipleUpperCaseState());
+        return name.toLowerCase();
     }
 }
 
 class MultipleUpperCaseState implements State {
-    /* Counter local to this state */
     private int count = 0;
 
-    @Override
-    public void writeName(StateContext context, String name) {
-        System.out.println(name.toUpperCase());
-        /* Change state after StateMultipleUpperCase's writeName() gets invoked twice */
-        if(++count > 1) {
+    @Override public String writeName(StateContext context, String name) {
+        if (++count > 1) {
             context.setState(new LowerCaseState());
         }
+        return name.toUpperCase();
     }
 }
 
-class StateDemo {
-    public static void main(String[] args) {
-        StateContext context = new StateContext();
-
-        context.writeName("Monday");
-        context.writeName("Tuesday");
-        context.writeName("Wednesday");
-        context.writeName("Thursday");
-        context.writeName("Friday");
-        context.writeName("Saturday");
-        context.writeName("Sunday");
-    }
-}
