@@ -1,6 +1,7 @@
  class Door {
      var open = false
          private set
+
      var message = ""
          private set
 
