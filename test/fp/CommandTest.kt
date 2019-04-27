@@ -13,12 +13,12 @@ class `FP light commands` {
 
     @Test fun turn_on() {
         turnOn(light)()
-        assertTrue(light.isOn())
+        assertTrue(light.on)
     }
 
     @Test fun turn_off() {
         turnOff(light)()
-        assertFalse(light.isOn())
+        assertFalse(light.on)
     }
 }
 
@@ -27,17 +27,17 @@ class `FP door commands` {
 
     @Test fun open() {
         open(door)()
-        assertTrue(door.isOpen())
+        assertTrue(door.open)
     }
 
     @Test fun close() {
         close(door)()
-        assertFalse(door.isOpen())
+        assertFalse(door.open)
     }
 
     @Test fun greet() {
         greet(door, "hello")()
-        assertEquals("hello", door.greeting)
+        assertEquals("hello", door.message)
     }
 }
 
@@ -48,7 +48,8 @@ class `FP command list` {
     @Test fun execute() {
         sequencer(listOf(open(door), turnOn(light), greet(door, "hello")))()
 
-        assertTrue(door.isOpen())
-        assertTrue(light.isOn())
+        assertTrue(door.open)
+        assertTrue(light.on)
+        assertEquals("hello", door.message)
     }
 }

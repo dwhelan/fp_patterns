@@ -10,12 +10,12 @@ class `OO light commands` {
 
     @Test fun turn_on() {
         TurnOn(light).execute()
-        assertTrue(light.isOn())
+        assertTrue(light.on)
     }
 
     @Test fun turn_off() {
         TurnOff(light).execute()
-        assertFalse(light.isOn())
+        assertFalse(light.on)
     }
 }
 
@@ -24,17 +24,17 @@ class `OO door commands` {
 
     @Test fun open() {
         Open(door).execute()
-        assertTrue(door.isOpen())
+        assertTrue(door.open)
     }
 
     @Test fun close() {
         Close(door).execute()
-        assertFalse(door.isOpen())
+        assertFalse(door.open)
     }
 
     @Test fun greet() {
         Greet(door, "hello").execute()
-        assertEquals("hello", door.greeting)
+        assertEquals("hello", door.message)
     }
 }
 
@@ -45,9 +45,9 @@ class `OO command list` {
     @Test fun execute() {
         Sequencer(listOf(Open(door), TurnOn(light), Greet(door, "hello"))).execute()
 
-        assertTrue(door.isOpen())
-        assertTrue(light.isOn())
-        assertEquals("hello", door.greeting)
+        assertTrue(door.open)
+        assertTrue(light.on)
+        assertEquals("hello", door.message)
     }
 }
 
