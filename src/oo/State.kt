@@ -1,15 +1,15 @@
 package oo
 
-interface State {
-    fun echo(string: String, context: Context): String
-}
-
 class Context {
     private var state: State = LowerCaseState()
 
     fun setState(newState: State) { state = newState }
 
     fun echo(string: String) = state.echo(string, this)
+}
+
+interface State {
+    fun echo(string: String, context: Context): String
 }
 
 class LowerCaseState : State {
