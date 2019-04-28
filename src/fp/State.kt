@@ -7,25 +7,27 @@ data class State(internal val mode: Mode, internal val count: Int) {}
 typealias Echo = Pair<String, State>
 
 class Processor {
-    fun echo(string: String) = lowerCase(string)
+    companion object {
+        fun init(string: String) = result(string, Mode.LOWER, 0)
+        fun result(string: String, mode: Mode, count: Int) = Pair(string, State(mode, count))
+    }
+
+    fun echo(string: String) = lowerCase(init(string))
 
     fun echo(echo: Echo) =
         when (echo.mode) {
-            Mode.LOWER -> lowerCase(echo.string)
-            else       -> upperCase(echo.string, echo.count)
+            Mode.LOWER -> lowerCase(echo)
+            else       -> upperCase(echo)
         }
 
-    private fun lowerCase(string: String) =
-        echo(string.toLowerCase(), Mode.UPPER, 0)
+    private fun lowerCase(echo: Echo) =
+        result(echo.string.toLowerCase(), Mode.UPPER, 0)
 
-    private fun upperCase(string: String, count: Int) =
-        when (count) {
-            0    -> echo(string.toUpperCase(), Mode.UPPER, count + 1)
-            else -> echo(string.toUpperCase(), Mode.LOWER, 0)
+    private fun upperCase(echo: Echo) =
+        when (echo.count) {
+            0    -> result(echo.string.toUpperCase(), Mode.UPPER, echo.count + 1)
+            else -> init(echo.string.toUpperCase())
         }
-
-    private fun echo(string: String, mode: Mode, count: Int) =
-        Pair(string, State(mode, count))
 }
 
 val Echo.string get() = this.first
