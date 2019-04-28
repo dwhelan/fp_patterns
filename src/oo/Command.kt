@@ -11,10 +11,6 @@ class TurnOn(val light: Light) : Command {
     override fun execute() { light.on() }
 }
 
-class Open(val door: Door) : Command {
-    override fun execute() { door.open() }
-}
-
 class Greet(val door: Door, val message: String) : Command {
     override fun execute() { door.greet(message) }
 }

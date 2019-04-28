@@ -20,6 +20,10 @@ class Processor {
             else       -> upperCase(echo)
         }
 
+    fun lets() {
+        "code"
+    }
+
     private fun lowerCase(echo: Echo) =
         result(echo.string.toLowerCase(), Mode.UPPER, 0)
 

@@ -10,35 +10,21 @@ import kotlin.test.assertEquals
 
 class CommandTest {
     val light = Light()
+    val door = Door()
 
-    @Test fun turn_on() {
+    @Test fun turn_on_light() {
         turnOn(light)()
         assertTrue(light.on)
     }
-}
 
-class `FP door commands` {
-    val door = Door()
-
-    @Test fun open() {
-        open(door)()
-        assertTrue(door.open)
-    }
-
-    @Test fun greet() {
+    @Test fun greet_at_door() {
         greet(door, "hello")()
         assertEquals("hello", door.message)
     }
-}
 
-class `FP command list` {
-    val door = Door()
-    val light = Light()
+    @Test fun sequencer() {
+        sequencer(listOf(turnOn(light), greet(door, "hello")))()
 
-    @Test fun execute() {
-        sequencer(listOf(open(door), turnOn(light), greet(door, "hello")))()
-
-        assertTrue(door.open)
         assertTrue(light.on)
         assertEquals("hello", door.message)
     }

@@ -11,10 +11,6 @@ val turnOn: (Light) -> Command = {
     light -> { light.on() }
 }
 
-val open: (Door) -> Command = {
-    door -> { door.open() }
-}
-
 val greet: (Door, String) -> Command = {
     door, message -> { door.greet(message) }
 }
