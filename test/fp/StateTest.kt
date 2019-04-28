@@ -7,28 +7,35 @@ class StateTest {
     private val processor = Processor()
 
     @Test fun `starts in lower case state`() {
-        val result = processor.echo("A")
-        assertEquals("a", result.first)
+        val result = processor.echo("ABC")
+
+        assertEquals("abc", result.string)
     }
 
     @Test fun `after one call is in upper case state`() {
-        val result1 : Pair<String, State> = processor.echo("")
-        val result : Pair<String, State> = processor.echo(Pair("a", result1.second))
-        assertEquals("A", result.first)
+        val echo1 = processor.echo("")
+
+        val result = processor.echo(echo1.string("abc"))
+
+        assertEquals("ABC", result.string)
     }
 
     @Test fun `after two calls is still in upper case state`() {
-        val result1 : Pair<String, State> = processor.echo("")
-        val result2 : Pair<String, State> = processor.echo(Pair("", result1.second))
-        val result : Pair<String, State> = processor.echo(Pair("a", result2.second))
-        assertEquals("A", result.first)
+        val echo1 = processor.echo("")
+        val echo2 = processor.echo(echo1.string(""))
+
+        val result = processor.echo(echo2.string("abc"))
+
+        assertEquals("ABC", result.string)
     }
 
     @Test fun `after three calls is back in lower case state`() {
-        val result1 : Pair<String, State> = processor.echo("1")
-        val result2 : Pair<String, State> = processor.echo(Pair("2", result1.second))
-        val result3 : Pair<String, State> = processor.echo(Pair("3", result2.second))
-        val result : Pair<String, State> = processor.echo(Pair("A", result3.second))
-        assertEquals("a", result.first)
+        val echo1 = processor.echo("")
+        val echo2 = processor.echo(echo1.string(""))
+        val echo3 = processor.echo(echo2.string(""))
+
+        val result = processor.echo(echo3.string("ABC"))
+
+        assertEquals("abc", result.string)
     }
 }

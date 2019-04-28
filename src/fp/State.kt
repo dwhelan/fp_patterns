@@ -1,38 +1,36 @@
 package fp
 
-enum class StateName { LOWER, UPPER }
+enum class Mode { LOWER, UPPER }
 
-data class State(internal val name: StateName, internal val count: Int) {
-}
+data class State(internal val mode: Mode, internal val count: Int) {}
 
 typealias Echo = Pair<String, State>
 
 class Processor {
-    fun echo(string: String) =
-        lower_case(string)
+    fun echo(string: String) = lowerCase(string)
 
-    fun echo(result: Echo) =
-        if (result.name == StateName.LOWER) {
-            lower_case(result.string)
-        } else {
-            upper_case(result.string, result.count)
+    fun echo(echo: Echo) =
+        when (echo.mode) {
+            Mode.LOWER -> lowerCase(echo.string)
+            else       -> upperCase(echo.string, echo.count)
         }
 
-    private fun lower_case(string: String) =
-        result(string.toLowerCase(), StateName.UPPER, 0)
+    private fun lowerCase(string: String) =
+        echo(string.toLowerCase(), Mode.UPPER, 0)
 
-    private fun upper_case(string: String, count: Int) =
+    private fun upperCase(string: String, count: Int) =
         when (count) {
-            0    -> result(string.toUpperCase(), StateName.UPPER, count + 1)
-            else -> result(string.toUpperCase(), StateName.LOWER, 0)
+            0    -> echo(string.toUpperCase(), Mode.UPPER, count + 1)
+            else -> echo(string.toUpperCase(), Mode.LOWER, 0)
         }
 
-    private fun result(string: String, name: StateName, count: Int) =
-        Pair(string, State(name, count))
-
+    private fun echo(string: String, mode: Mode, count: Int) =
+        Pair(string, State(mode, count))
 }
 
 val Echo.string get() = this.first
-val Echo.state get() = this.second
-val Echo.name get() = this.state.name
-val Echo.count get() = this.state.count
+val Echo.state  get() = this.second
+val Echo.mode   get() = this.state.mode
+val Echo.count  get() = this.state.count
+
+fun Echo.string(string: String) = Pair(string, this.state)
