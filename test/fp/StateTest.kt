@@ -22,7 +22,7 @@ class StateTest {
 
     @Test fun `after two calls is still in upper case state`() {
         val echo1 = processor.echo("")
-        val echo2 = processor.echo(echo1.string(""))
+        val echo2 = processor.echo(echo1)
 
         val result = processor.echo(echo2.string("abc"))
 
@@ -31,8 +31,8 @@ class StateTest {
 
     @Test fun `after three calls is back in lower case state`() {
         val echo1 = processor.echo("")
-        val echo2 = processor.echo(echo1.string(""))
-        val echo3 = processor.echo(echo2.string(""))
+        val echo2 = processor.echo(echo1)
+        val echo3 = processor.echo(echo2)
 
         val result = processor.echo(echo3.string("ABC"))
 
