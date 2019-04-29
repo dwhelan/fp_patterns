@@ -1,36 +1,31 @@
 package fp
 
-enum class Mode { LOWER, UPPER }
-
-data class State(internal val mode: Mode, internal val count: Int) {}
+data class State(val processor: Processor = LowerCase(), val count: Int = 0) {}
 
 data class Result(val string: String, val state: State) {}
 
-class Processor {
-    companion object {
-        fun result(string: String) = result(string, Mode.LOWER, 0)
-        fun result(string: String, mode: Mode, count: Int) = Result(string, State(mode, count))
-    }
-
-    fun echo(string: String) = lowerCase(result(string))
-
-    fun echo(result: Result) =
-        when (result.mode) {
-            Mode.LOWER -> lowerCase(result)
-            else       -> upperCase(result)
-        }
-
-    private fun lowerCase(result: Result) =
-        result(result.string.toLowerCase(), Mode.UPPER, 0)
-
-    private fun upperCase(echo: Result) =
-        when (echo.count) {
-            0    -> result(echo.string.toUpperCase(), Mode.UPPER, echo.count + 1)
-            else -> result(echo.string.toUpperCase())
-        }
+class Context {
+    fun echo(string: String) = echo(string, State())
+    fun echo(string: String, state: State) = state.processor.echo(string, state)
 }
 
-val Result.mode   get() = this.state.mode
-val Result.count  get() = this.state.count
+interface Processor {
+    fun echo(string: String, state: State): Result
+}
 
-fun Result.string(string: String) = Result(string, state)
+class LowerCase : Processor {
+    override fun echo(string: String, state: State) =
+        Result(string.toLowerCase(), State(UpperCase(), 0))
+}
+
+class UpperCase : Processor {
+    override fun echo(string: String, state: State): Result {
+        if (beenHereBefore(state)) {
+            return Result(string.toUpperCase(), State(LowerCase(), 0))
+        } else {
+            return Result(string.toUpperCase(), State(UpperCase(), state.count + 1))
+        }
+    }
+
+    private fun beenHereBefore(state: State) =  state.count > 0
+}
