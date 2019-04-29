@@ -1,4 +1,4 @@
-package fp
+package fp2
 
 data class Result(val string: String, val state: State) {}
 

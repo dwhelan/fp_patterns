@@ -1,9 +1,9 @@
-package fp
+package fp2
 
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
-class StateTest {
+class State2Test {
     @Test fun starts_in_lower_case() {
         assertEquals("abc", echo("ABC").string)
     }

@@ -23,7 +23,7 @@ class UpperCase : Processor {
     private var count = 0
 
     override fun echo(string: String, context: Context): String {
-        if (beenHereBefore()) {
+        if (isSecondTime()) {
             context.setProcessor(LowerCase())
         } else {
             count++
@@ -31,5 +31,5 @@ class UpperCase : Processor {
         return string.toUpperCase()
     }
 
-    private fun beenHereBefore() = count > 0
+    private fun isSecondTime() = count > 0
 }
