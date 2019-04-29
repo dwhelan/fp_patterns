@@ -1,29 +1,27 @@
 package oo
 
 class Context {
-    private var state: State = LowerCaseState()
-
-    fun setState(newState: State) { state = newState }
+    internal var state: Processor = LowerCase()
 
     fun echo(string: String) = state.echo(string, this)
 }
 
-interface State {
+interface Processor {
     fun echo(string: String, context: Context): String
 }
 
-class LowerCaseState : State {
+class LowerCase : Processor {
     override fun echo(string: String, context: Context): String {
-        context.setState(UpperCaseState())
+        context.state = UpperCase()
         return string.toLowerCase()
     }
 }
 
-class UpperCaseState : State {
+class UpperCase : Processor {
     private var count = 0
 
     override fun echo(string: String, context: Context): String {
-        if (haveBeenHereTwice()) { context.setState(LowerCaseState()) }
+        if (haveBeenHereTwice()) { context.state = LowerCase() }
         return string.toUpperCase()
     }
 
