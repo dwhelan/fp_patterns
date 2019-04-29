@@ -7,18 +7,27 @@ class StateTest {
     private val context = Context()
 
     @Test fun starts_in_lower_case() {
-        assertEquals("x", context.echo("X").string)
+        assertEquals("abc", context.echo("ABC").string)
     }
 
     @Test fun after_lower_case_switches_to_upper_case() {
-        context.echo("in lower")
-        assertEquals("X", context.echo("x").string)
+        val result = context.echo("")
+        assertEquals("ABC", context.echo("abc", result.state).string)
+    }
+
+    @Test fun `after one upper case stays in upper case`() {
+        var result = context.echo("")
+
+        result = context.echo("", result.state)
+
+        assertEquals("ABC", context.echo("abc", result.state).string)
     }
 
     @Test fun after_two_upper_cases_switches_to_lower_case() {
-        context.echo("in lower")
-        context.echo("in upper")
-        context.echo("in upper")
-        assertEquals("x", context.echo("X").string)
+        var result = context.echo("")
+        result = context.echo("", result.state)
+
+        result = context.echo("", result.state)
+        assertEquals("abc", context.echo("ABC", result.state).string)
     }
 }

@@ -1,36 +1,31 @@
 package fp2
 
-data class State(internal val processor: Processor, internal val count: Int) {}
+data class State(val processor: Processor = LowerCase(), val count: Int = 0) {}
 
 data class Result(val string: String, val state: State) {}
 
 class Context {
-    internal var state: Processor = LowerCaseState()
-
-    fun echo(string: String) = state.echo(string, this)
+    fun echo(string: String) = echo(string, State())
+    fun echo(string: String, state: State) = state.processor.echo(string, state)
 }
 
 interface Processor {
-    fun echo(string: String, context: Context): Result
+    fun echo(string: String, state: State): Result
 }
 
-class LowerCaseState : Processor {
-    override fun echo(string: String, context: Context): Result {
-        context.state = UpperCaseState()
-        return Result(string.toLowerCase(), State(UpperCaseState(), 0))
-    }
+class LowerCase : Processor {
+    override fun echo(string: String, state: State) =
+        Result(string.toLowerCase(), State(UpperCase(), 0))
 }
 
-class UpperCaseState : Processor {
-    private var count = 0
-
-    override fun echo(string: String, context: Context): Result {
-        if (haveBeenHereTwice()) {
-            context.state = LowerCaseState()
-            return Result(string.toUpperCase(), State(LowerCaseState(), 1))
+class UpperCase : Processor {
+    override fun echo(string: String, state: State): Result {
+        if (beenHereBefore(state)) {
+            return Result(string.toUpperCase(), State(LowerCase(), 0))
+        } else {
+            return Result(string.toUpperCase(), State(UpperCase(), state.count + 1))
         }
-        return Result(string.toUpperCase(), State(UpperCaseState(), 1))
     }
 
-    private fun haveBeenHereTwice() = ++count > 1
+    private fun beenHereBefore(state: State) =  state.count > 0
 }

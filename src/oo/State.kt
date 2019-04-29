@@ -1,9 +1,11 @@
 package oo
 
 class Context {
-    internal var state: Processor = LowerCase()
+    private var processor: Processor = LowerCase()
 
-    fun echo(string: String) = state.echo(string, this)
+    internal fun setProcessor(processor: Processor) { this.processor = processor }
+
+    fun echo(string: String) = processor.echo(string, this)
 }
 
 interface Processor {
@@ -12,7 +14,7 @@ interface Processor {
 
 class LowerCase : Processor {
     override fun echo(string: String, context: Context): String {
-        context.state = UpperCase()
+        context.setProcessor(UpperCase())
         return string.toLowerCase()
     }
 }
@@ -21,9 +23,13 @@ class UpperCase : Processor {
     private var count = 0
 
     override fun echo(string: String, context: Context): String {
-        if (haveBeenHereTwice()) { context.state = LowerCase() }
+        if (beenHereBefore()) {
+            context.setProcessor(LowerCase())
+        } else {
+            count++
+        }
         return string.toUpperCase()
     }
 
-    private fun haveBeenHereTwice() =  ++count > 1
+    private fun beenHereBefore() = count > 0
 }
