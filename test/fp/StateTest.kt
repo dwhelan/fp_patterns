@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 class StateTest {
+
     @Test fun starts_in_lower_case() {
         assertEquals("abc", echo("ABC").string)
     }
