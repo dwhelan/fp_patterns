@@ -1,28 +1,23 @@
 
-fun echo(string: String, state: State = State()) =
-    state.echoer.echo(string, state)
+typealias Echoer = (String, State) -> Result
+
+fun echo(string: String, state: State = State(lowerCase)) =
+    state.echoer(string, state)
 
 data class Result(val string: String, val state: State) {}
 
-data class State(var echoer: Echo = LowerCase(), val count: Int = 0) {}
+data class State(var echoer: Echoer, val count: Int = 0) {}
 
-interface Echo {
-    fun echo(string: String, state: State): Result
+val lowerCase: Echoer = { string, state ->
+    state.echoer = upperCase
+    Result(string.toLowerCase(), state)
 }
 
-class LowerCase : Echo {
-    override fun echo(string: String, state: State): Result {
-        state.echoer = UpperCase()
-        return Result(string.toLowerCase(), state)
-    }
+val upperCase: Echoer = { string, state ->
+    var count = state.count + 1
+    fun isSecondTime() = 1 < count
+    if (isSecondTime())
+        state.echoer = lowerCase
+    Result(string.toUpperCase(), State(state.echoer, count))
 }
 
-class UpperCase : Echo {
-    override fun echo(string: String, state: State): Result {
-        var count = state.count + 1
-        fun isSecondTime() = 1 < count
-        if (isSecondTime())
-            state.echoer = LowerCase()
-        return Result(string.toUpperCase(), State(state.echoer, count))
-    }
-}
