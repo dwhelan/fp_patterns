@@ -3,8 +3,7 @@ import org.junit.jupiter.api.*
 
 class StateTest {
     @Test fun starts_in_lower_case() {
-        val context = Context()
-        assertEquals("abc", context.echo("ABC", context).string)
+        assertEquals("abc", echo("ABC").string)
     }
 
     @Test fun after_one_switches_to_upper_case() {

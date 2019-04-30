@@ -4,6 +4,11 @@ class Context {
         Result(state.echo(string, context), context)
 }
 
+fun echo(string: String): Result {
+    val context = Context()
+    return context.echo(string, context)
+}
+
 data class Result(val string: String, val context: Context) {}
 
 interface State {
