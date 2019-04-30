@@ -2,55 +2,27 @@ package fp
 
 data class Result(val string: String, val state: State) {}
 
-data class State(val name: EchoState, val data: Int = 0) {}
+data class State(val mode: Echo, val data: Int = 0) {}
 
-enum class EchoState { LOWER_CASE, UPPER_CASE }
-fun lowerCase() = EchoState.LOWER_CASE
-fun upperCase() = EchoState.UPPER_CASE
+enum class Echo { lower, upper }
 
-val doers = mapOf<EchoState, (String, State) -> Result> (
-    lowerCase() to ::doLowerCase,
-    upperCase() to ::doUpperCase
+val echoers = mapOf<Echo, (String, State) -> Result> (
+    Echo.lower to ::doLowerCase,
+    Echo.upper to ::doUpperCase
 )
 
-fun echo(string: String, state: State = State(lowerCase())) =
-    doers[state.name]!!.invoke(string, state)
+fun echo(string: String, state: State = State(Echo.lower)) =
+    echoers[state.mode]!!.invoke(string, state)
 
 fun doLowerCase(string: String, state: State) = Result(
     string.toLowerCase(),
-    State(upperCase())
+    State(Echo.upper)
 )
 
 fun doUpperCase(string: String, state: State) = Result(
     string.toUpperCase(),
     if (state.data > 0)
-        State(lowerCase())
+        State(Echo.lower)
     else
-        State(upperCase(), state.data + 1)
+        State(Echo.upper, state.data + 1)
 )
-
-
-// Replace polymorphism with map of functions
-
-//}
-
-//interface EchoState {
-//    fun echo(string: String, state: State): Result
-//}
-//
-//class LowerCase : EchoState {
-//    override fun echo(string: String, state: State) =
-//        Result(string.toLowerCase(), State(UpperCase()))
-//}
-//
-//class UpperCase : EchoState {
-//    override fun echo(string: String, state: State) =
-//        Result(
-//            string.toUpperCase(),
-//            if (state.data > 0) {
-//                State(LowerCase())
-//            } else {
-//                State(UpperCase(), state.data + 1)
-//            }
-//        )
-//}
