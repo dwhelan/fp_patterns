@@ -1,7 +1,10 @@
 class Context {
     internal var state: State = LowerCase()
-    fun echo(string: String, context: Context) = state.echo(string, context)
+    fun echo(string: String, context: Context) =
+        Result(state.echo(string, context), context)
 }
+
+data class Result(val string: String, val context: Context) {}
 
 interface State {
     fun echo(string: String, context: Context): String
