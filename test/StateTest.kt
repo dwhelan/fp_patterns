@@ -8,19 +8,19 @@ class StateTest {
 
     @Test fun after_one_switches_to_upper_case() {
         val result = echo("")
-        assertEquals("ABC", echo("abc", result.context).string)
+        assertEquals("ABC", echo("abc", result.state).string)
     }
 
     @Test fun after_two_stays_in_upper_case() {
         val result1 = echo("")
-        val result2 = echo("", result1.context)
-        assertEquals("ABC", echo("abc", result2.context).string)
+        val result2 = echo("", result1.state)
+        assertEquals("ABC", echo("abc", result2.state).string)
     }
 
     @Test fun after_three_switches_to_lower_case() {
         val result1 = echo("")
-        val result2 = echo("", result1.context)
-        val result3 = echo("", result2.context)
-        assertEquals("abc", echo("ABC", result3.context).string)
+        val result2 = echo("", result1.state)
+        val result3 = echo("", result2.state)
+        assertEquals("abc", echo("ABC", result3.state).string)
     }
 }

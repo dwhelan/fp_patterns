@@ -8,7 +8,7 @@ fun echo(string: String, context: Context = Context()): Result {
     return context.echo(string, context)
 }
 
-data class Result(val string: String, val context: Context) {}
+data class Result(val string: String, val state: Context) {}
 
 interface Echo {
     fun echo(string: String, context: Context): String
