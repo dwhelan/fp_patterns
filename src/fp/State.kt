@@ -1,5 +1,8 @@
 package fp
 
+fun echo(string: String, state: State = State(Echo.lower)) =
+    echoers[state.mode]!!.invoke(string, state)
+
 data class Result(val string: String, val state: State) {}
 
 data class State(val mode: Echo, val data: Int = 0) {}
@@ -10,9 +13,6 @@ val echoers = mapOf<Echo, (String, State) -> Result>(
     Echo.lower to ::lowerCase,
     Echo.upper to ::upperCase
 )
-
-fun echo(string: String, state: State = State(Echo.lower)) =
-    echoers[state.mode]!!.invoke(string, state)
 
 fun lowerCase(string: String, state: State) =
     Result(
