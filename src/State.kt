@@ -1,30 +1,30 @@
 
-fun echo(string: String, context: Context = Context()) =
-    Result(context.state.echo(string, context), context)
+fun echo(string: String, state: State = State()) =
+    state.state.echo(string, state)
 
-data class Result(val string: String, val state: Context) {}
+data class Result(val string: String, val state: State) {}
 
-data class Context(var state: Echo = LowerCase()) {}
+data class State(var state: Echo = LowerCase()) {}
 
 interface Echo {
-    fun echo(string: String, context: Context): String
+    fun echo(string: String, state: State): Result
 }
 
 class LowerCase : Echo {
-    override fun echo(string: String, context: Context): String {
-        context.state = UpperCase()
-        return string.toLowerCase()
+    override fun echo(string: String, state: State): Result {
+        state.state = UpperCase()
+        return Result(string.toLowerCase(), state)
     }
 }
 
 class UpperCase : Echo {
     private var count = 0
 
-    override fun echo(string: String, context: Context): String {
+    override fun echo(string: String, state: State): Result {
         count++
         if (isSecondTime())
-            context.state = LowerCase()
-        return string.toUpperCase()
+            state.state = LowerCase()
+        return Result(string.toUpperCase(), state)
     }
 
     private fun isSecondTime() = 1 < count
