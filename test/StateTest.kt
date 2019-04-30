@@ -7,23 +7,20 @@ class StateTest {
     }
 
     @Test fun after_one_switches_to_upper_case() {
-        val context = Context()
-        context.echo("", context)
-        assertEquals("ABC", context.echo("abc", context).string)
+        val result = echo("")
+        assertEquals("ABC", echo("abc", result.context).string)
     }
 
     @Test fun after_two_stays_in_upper_case() {
-        val context = Context()
-        context.echo("", context)
-        context.echo("", context)
-        assertEquals("ABC", context.echo("abc", context).string)
+        val result1 = echo("")
+        val result2 = echo("", result1.context)
+        assertEquals("ABC", echo("abc", result2.context).string)
     }
 
     @Test fun after_three_switches_to_lower_case() {
-        val context = Context()
-        context.echo("", context)
-        context.echo("", context)
-        context.echo("", context)
-        assertEquals("abc", context.echo("ABC", context).string)
+        val result1 = echo("")
+        val result2 = echo("", result1.context)
+        val result3 = echo("", result2.context)
+        assertEquals("abc", echo("ABC", result3.context).string)
     }
 }

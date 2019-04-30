@@ -1,28 +1,27 @@
 class Context {
-    internal var state: State = LowerCase()
+    internal var state: Echo = LowerCase()
     fun echo(string: String, context: Context) =
         Result(state.echo(string, context), context)
 }
 
-fun echo(string: String): Result {
-    val context = Context()
+fun echo(string: String, context: Context = Context()): Result {
     return context.echo(string, context)
 }
 
 data class Result(val string: String, val context: Context) {}
 
-interface State {
+interface Echo {
     fun echo(string: String, context: Context): String
 }
 
-class LowerCase : State {
+class LowerCase : Echo {
     override fun echo(string: String, context: Context): String {
         context.state = UpperCase()
         return string.toLowerCase()
     }
 }
 
-class UpperCase : State {
+class UpperCase : Echo {
     private var count = 0
 
     override fun echo(string: String, context: Context): String {
