@@ -1,35 +1,34 @@
 package oo
 
 class Context {
-    private var processor: Processor = LowerCase()
+    private var state: State = LowerCase()
 
-    internal fun setProcessor(processor: Processor) { this.processor = processor }
+    internal fun setState(state: State) { this.state = state }
 
-    fun echo(string: String) = processor.echo(string, this)
+    fun echo(string: String) = state.echo(string, this)
 }
 
-interface Processor {
+interface State {
     fun echo(string: String, context: Context): String
 }
 
-class LowerCase : Processor {
+class LowerCase : State {
     override fun echo(string: String, context: Context): String {
-        context.setProcessor(UpperCase())
-        return string.toLowerCase()
+        val result = string.toLowerCase()
+        context.setState(UpperCase())
+        return result
     }
 }
 
-class UpperCase : Processor {
-    private var count = 0
+class UpperCase : State {
+    private var data = 0
 
     override fun echo(string: String, context: Context): String {
-        if (isSecondTime()) {
-            context.setProcessor(LowerCase())
-        } else {
-            count++
-        }
-        return string.toUpperCase()
+        val result = string.toUpperCase()
+        if (data > 0)
+            context.setState(LowerCase())
+        else
+            data++
+        return result
     }
-
-    private fun isSecondTime() = count > 0
 }
