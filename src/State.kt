@@ -4,7 +4,7 @@ fun echo(string: String, state: State = State()) =
 
 data class Result(val string: String, val state: State) {}
 
-data class State(var echoer: Echo = LowerCase()) {}
+data class State(var echoer: Echo = LowerCase(), val count: Int = 0) {}
 
 interface Echo {
     fun echo(string: String, state: State): Result
@@ -18,14 +18,11 @@ class LowerCase : Echo {
 }
 
 class UpperCase : Echo {
-    private var count = 0
-
     override fun echo(string: String, state: State): Result {
-        count++
+        var count = state.count + 1
+        fun isSecondTime() = 1 < count
         if (isSecondTime())
             state.echoer = LowerCase()
-        return Result(string.toUpperCase(), state)
+        return Result(string.toUpperCase(), State(state.echoer, count))
     }
-
-    private fun isSecondTime() = 1 < count
 }
