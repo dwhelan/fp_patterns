@@ -1,10 +1,7 @@
 package oo
 
 class Context {
-    private var state: State = LowerCase()
-
-    internal fun setState(state: State) { this.state = state }
-
+    internal var state: State = LowerCase()
     fun echo(string: String) = state.echo(string, this)
 }
 
@@ -14,21 +11,20 @@ interface State {
 
 class LowerCase : State {
     override fun echo(string: String, context: Context): String {
-        val result = string.toLowerCase()
-        context.setState(UpperCase())
-        return result
+        context.state = UpperCase()
+        return string.toLowerCase()
     }
 }
 
 class UpperCase : State {
-    private var data = 0
+    private var count = 0
 
     override fun echo(string: String, context: Context): String {
-        val result = string.toUpperCase()
-        if (data > 0)
-            context.setState(LowerCase())
-        else
-            data++
-        return result
+        count++
+        if (isSecondTime())
+            context.state = LowerCase()
+        return string.toUpperCase()
     }
+
+    private fun isSecondTime() = 1 < count
 }

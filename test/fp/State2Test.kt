@@ -16,7 +16,6 @@ class State2Test {
     @Test fun after_two_stays_in_upper_case() {
         var result = echo("")
         result = echo("", result.state)
-
         assertEquals("ABC", echo("abc", result.state).string)
     }
 
@@ -24,7 +23,6 @@ class State2Test {
         var result = echo("")
         result = echo("", result.state)
         result = echo("", result.state)
-
         assertEquals("abc", echo("ABC", result.state).string)
     }
 }
