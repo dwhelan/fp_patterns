@@ -1,4 +1,4 @@
-package fp
+package fp0
 
 fun echo(string: String, state: State = State(Echo.lower)) =
     echoers[state.mode]!!.invoke(string, state)

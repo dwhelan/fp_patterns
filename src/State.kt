@@ -1,19 +1,21 @@
-typealias Echoer = (String, State) -> Result
+private typealias Echoer = (String, State) -> Result
 
-data class State(val echoer: Echoer, val count: Int = 0) {}
+data class State(internal val echoer: Echoer = lowerCase, val count: Int = 0) {}
 
 data class Result(val string: String, val state: State) {}
 
-fun echo(string: String, state: State = State(lowerCase)) =
+fun echo(string: String, state: State = State()) =
     state.echoer(string, state)
 
-val lowerCase: Echoer = { string, state ->
+private val lowerCase: Echoer = { string, state ->
     Result(string.toLowerCase(), State(upperCase))
 }
 
-val upperCase: Echoer = { string, state ->
-    if (0 < state.count)
-        Result(string.toUpperCase(), State(lowerCase))
-    else
-        Result(string.toUpperCase(), State(state.echoer, state.count + 1))
+private val upperCase: Echoer = { string, state ->
+    val nextState =
+        if (0 < state.count)
+            State(lowerCase)
+        else
+            state.copy(count = state.count + 1)
+    Result(string.toUpperCase(), nextState)
 }

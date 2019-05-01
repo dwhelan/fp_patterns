@@ -1,7 +1,8 @@
 package fp
 
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Test
+import fp.echo
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.*
 
 class StateTest {
     @Test fun starts_in_lower_case() {
@@ -14,15 +15,15 @@ class StateTest {
     }
 
     @Test fun after_two_stays_in_upper_case() {
-        var result = echo("")
-        result = echo("", result.state)
-        assertEquals("ABC", echo("abc", result.state).string)
+        val result1 = echo("")
+        val result2 = echo("", result1.state)
+        assertEquals("ABC", echo("abc", result2.state).string)
     }
 
     @Test fun after_three_switches_to_lower_case() {
-        var result = echo("")
-        result = echo("", result.state)
-        result = echo("", result.state)
-        assertEquals("abc", echo("ABC", result.state).string)
+        val result1 = echo("")
+        val result2 = echo("", result1.state)
+        val result3 = echo("", result2.state)
+        assertEquals("abc", echo("ABC", result3.state).string)
     }
 }
